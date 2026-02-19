@@ -60,3 +60,18 @@ app.get('/api/items', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+app.delete('/api/items/:id', async (req, res) => {
+  try {
+    const { id } = req.params; // Get id from the URL
+    const deletedItem = await Item.findByIdAndDelete(id);
+
+    if (!deletedItem) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+
+    res.status(200).json({ message: "Item deleted successfully", id });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
