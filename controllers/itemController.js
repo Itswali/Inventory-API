@@ -18,6 +18,20 @@ const createItem = async (req, res, next) => {
   }
 };
 
+const editItem = async (req, res, next) =>{
+  try {
+    const { id } = req.params;
+    const updateData = req.body;
+
+    const updatedItem = await Item.findByIdAndUpdate(id, updateData, { new: true, runValidators: true }
+    );if (!updatedItem) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+    res.status(200).json(updatedItem);
+  } catch (error) {
+    next(error);
+  }
+};
 const deleteItem = async (req, res, next) => {
   try {
     const deletedItem = await Item.findByIdAndDelete(req.params.id);
@@ -30,4 +44,4 @@ const deleteItem = async (req, res, next) => {
   }
 };
 
-module.exports = { getItems, createItem, deleteItem };
+module.exports = { getItems, createItem, deleteItem, editItem };
