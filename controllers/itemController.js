@@ -1,6 +1,7 @@
-const Item = require('../models/itemModel');
+import Item from '../models/itemModel.js';
 
-const getItems = async (req, res, next) => {
+// Add 'export' before 'const' for every function
+export const getItems = async (req, res, next) => {
   try {
     const items = await Item.find();
     res.status(200).json(items);
@@ -9,7 +10,7 @@ const getItems = async (req, res, next) => {
   }
 };
 
-const createItem = async (req, res, next) => {
+export const createItem = async (req, res, next) => {
   try {
     const newItem = await Item.create(req.body);
     res.status(201).json(newItem);
@@ -18,13 +19,17 @@ const createItem = async (req, res, next) => {
   }
 };
 
-const editItem = async (req, res, next) =>{
+export const editItem = async (req, res, next) => {
   try {
     const { id } = req.params;
     const updateData = req.body;
 
-    const updatedItem = await Item.findByIdAndUpdate(id, updateData, { new: true, runValidators: true }
-    );if (!updatedItem) {
+    const updatedItem = await Item.findByIdAndUpdate(id, updateData, {
+      new: true,
+      runValidators: true
+    });
+
+    if (!updatedItem) {
       return res.status(404).json({ message: "Item not found" });
     }
     res.status(200).json(updatedItem);
@@ -32,7 +37,8 @@ const editItem = async (req, res, next) =>{
     next(error);
   }
 };
-const deleteItem = async (req, res, next) => {
+
+export const deleteItem = async (req, res, next) => {
   try {
     const deletedItem = await Item.findByIdAndDelete(req.params.id);
     if (!deletedItem) {
@@ -43,5 +49,3 @@ const deleteItem = async (req, res, next) => {
     next(error);
   }
 };
-
-module.exports = { getItems, createItem, deleteItem, editItem };

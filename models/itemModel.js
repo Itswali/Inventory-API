@@ -1,7 +1,6 @@
-const mongoose = require('mongoose'); // Use require if using CommonJS (Standard for Express)
+import mongoose from 'mongoose';
 
 const itemSchema = new mongoose.Schema({
-  // Note: MongoDB provides _id automatically
   name: {
     type: String,
     required: [true, "Please add an item name"],
@@ -22,4 +21,4 @@ const itemSchema = new mongoose.Schema({
   },
 }, { timestamps: true });
 
-module.exports = mongoose.model('Item', itemSchema);
+export default mongoose.model('Item', itemSchema);
