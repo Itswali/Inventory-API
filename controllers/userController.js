@@ -1,7 +1,6 @@
 import User from '../models/userModel.js';
 import ErrorHandler from '../middleware/ErrorHandler.js';
 import bcrypt from 'bcryptjs';
-// Added 'export' keyword
 export const registerUser = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
@@ -46,3 +45,5 @@ export const loginUser = async (req, res, next) => {
     next(error);
   }
 };
+
+export const logoutUser = async
